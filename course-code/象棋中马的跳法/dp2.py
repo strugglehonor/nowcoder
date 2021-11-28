@@ -27,7 +27,7 @@ def solve(step, a, b):
 
 # 辅助函数
 def getValue(i, j, z, step, dp):
-    # print(step)
+    print(i, j, z)
     if i>9 or i<0 or j>8 or j<0 or z<0 or z>step:
         return 0
     else:

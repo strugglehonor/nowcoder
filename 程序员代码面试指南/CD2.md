@@ -1,7 +1,7 @@
 /*
  * @Author: zijian.su
  * @Date: 2021-11-21 19:47:37 
- * @Last Modified by: mikey.zhaopeng
+ * @Last Modified by: zijian.su
  * @Last Modified time: 2021-11-21 19:57:07
  */
 ## 最长的可整合子数组的长度
