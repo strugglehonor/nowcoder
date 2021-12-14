@@ -5,14 +5,14 @@ package graph
 // 两个算法，K算法和P算法
 
 // P算法,node为从这个点出发
-func (graph Graph) Prim(node Node) []Edge {
-	res := make([]Edge, 0)
+func (graph Graph) Prim(node *Node) []*Edge {
+	res := make([]*Edge, 0)
 	// node set 是为了判断，防止重复
-	nodeSet := map[int]Node{node.val: node}
+	nodeSet := map[int]*Node{node.val: node}
 	// 这里应该使用小根堆效率较高，为了简单，使用了切片
-	edgeHeap := make([]Edge, 0)  
+	edgeHeap := make([]*Edge, 0)  
 	// 从这个点出发的所有的边加到小根堆
-	for _, edge := range node.edge {
+	for _, edge := range node.edges {
 		edgeHeap = append(edgeHeap, edge)
 	}
 	for len(edgeHeap) != 0 {
@@ -23,7 +23,7 @@ func (graph Graph) Prim(node Node) []Edge {
 			nodeSet[nodeval] = edge.to
 			res = append(res, edge)
 			// 把这个点关联的所有边加到小根堆
-			for _, edge := range edge.to.edge {
+			for _, edge := range edge.to.edges {
 				edgeHeap = append(edgeHeap, edge)
 			}
 		}
@@ -33,9 +33,9 @@ func (graph Graph) Prim(node Node) []Edge {
 }
 
 // K算法，
-func (graph Graph) Kruskal() []Edge {
+func (graph Graph) Kruskal() []*Edge {
 	nodesMap := generateNodeSet(graph)
-	edgeRes := make([]Edge, 0)  // 返回需要的边
+	edgeRes := make([]*Edge, 0)  // 返回需要的边
 
 	// 遍历所有的边，先从小的边开始
 	for i:=0; i<len(graph.edges); i++ {
@@ -54,7 +54,7 @@ func (graph Graph) Kruskal() []Edge {
 }
 
 // 返回权值最小的边
-func minEdge(edges []Edge) Edge {
+func minEdge(edges []*Edge) *Edge {
 	res := edges[0]
 	for _, edge := range edges {
 		if edge.weight > res.weight {
@@ -65,26 +65,26 @@ func minEdge(edges []Edge) Edge {
 }
 
 // 将图中所有的点加入分成集合 []map[int]*[]Node
-func generateNodeSet(graph Graph) map[int]*[]Node {
+func generateNodeSet(graph Graph) map[int]*[]*Node {
 	// res := make([]map[int]*[]Node, 0)
-	var nodesMap map[int]*[]Node
+	var nodesMap map[int]*[]*Node
 	for _, node := range graph.nodes {
-		nodeArray := make([]Node, 0)
+		nodeArray := make([]*Node, 0)
 		nodeArray = append(nodeArray, node)
-		nodesMap = map[int]*[]Node{node.val:&nodeArray}
+		nodesMap[node.val] = &nodeArray
 		// res = append(res, nodesMap)
 	}
 	return nodesMap
 }
 
 // 将两个集合中的所有元素合并成一个大集合,ns为nodeset的意思
-func unionNodeSet(ns1, ns2 []Node) []Node {
+func unionNodeSet(ns1, ns2 []*Node) []*Node {
 	ns2 = append(ns2, ns1...)
 	return ns2
 }
 
 // 两个集合是否在一个集合里面
-func isSameNodeSet(ns1, ns2 *[]Node) bool {
+func isSameNodeSet(ns1, ns2 *[]*Node) bool {
 	if ns1 == ns2 {
 		return true
 	}
