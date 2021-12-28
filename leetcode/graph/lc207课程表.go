@@ -39,7 +39,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 
     }
     nodeRes := topologicalSort(graph)
-    for nodeval, _ := range graph.nodes {
+    for nodeval := range graph.nodes {
         res := compare(nodeval, nodeRes)
         if !res {
             return false
